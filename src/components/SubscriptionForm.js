@@ -42,13 +42,19 @@ export class SubscriptionForm extends Component {
         });
     }
 
+    handleCheck = (e) => {
+        this.setState({
+            acceptedTermsAndConditions : e.target.checked
+        });
+    }
+
     render() {
         const { step } = this.state;
         const { duration, gigabytes, upfrontPayment, firstName, lastName, 
-            email, address, cardNumber, cardExpiryDate, cardSecurityCode, price, 
+            email, address, cardNumber, cardExpiryDate, cardSecurityCode, price,  
             acceptedTermsAndConditions } = this.state;
         const values = { duration, gigabytes, upfrontPayment, firstName, lastName, 
-            email, address, cardNumber, cardExpiryDate, cardSecurityCode, price, 
+            email, address, cardNumber, cardExpiryDate, cardSecurityCode, price,
             acceptedTermsAndConditions }
 
         switch(step) {
@@ -84,6 +90,7 @@ export class SubscriptionForm extends Component {
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         handleChange={this.handleChange}
+                        handleCheck={this.handleCheck}
                         values={values}
                     />
                 )

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
+import Button from '@material-ui/core/Button';
 
 export class FormSubscriptionDetails extends Component {
 
@@ -20,9 +21,9 @@ export class FormSubscriptionDetails extends Component {
                         <label>
                             Subscription duration:
                             <select value={values.duration} onChange={handleChange('duration')}>
-                                <option value="3 months">3 months</option>
-                                <option value="6 months">6 months</option>
-                                <option value="12 months">12 months</option>
+                                <option value="3">3 months</option>
+                                <option value="6">6 months</option>
+                                <option value="12">12 months</option>
                             </select>
                         </label>
                         <label>
@@ -31,9 +32,9 @@ export class FormSubscriptionDetails extends Component {
                                 <option value="3">3</option>
                                 <option value="5">5</option>
                                 <option value="10">10</option>
-                                <option value="10">20</option>
-                                <option value="10">30</option>
-                                <option value="10">50</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="50">50</option>
                             </select>
                         </label>
                         <label>

@@ -8,7 +8,7 @@ export class Confirm extends Component {
 
     continue = (e) => {
         e.preventDefault();
-        // process form here - send to API
+        // process form here - send to API endpoint
         this.props.nextStep();
     }
 
@@ -19,8 +19,17 @@ export class Confirm extends Component {
 
     render() {
         const { values: { duration, gigabytes, upfrontPayment, firstName, lastName, 
-            email, address, cardNumber, cardExpiryDate, cardSecurityCode, price, 
-            acceptedTermsAndConditions }, handleChange } = this.props;
+            email, address, cardNumber, cardExpiryDate, cardSecurityCode,
+            acceptedTermsAndConditions }, handleCheck } = this.props;
+
+        const isEnabled = acceptedTermsAndConditions;
+
+        let totalPrice = gigabytes * parseInt(duration);  
+
+        if (upfrontPayment === "yes") {
+            totalPrice = totalPrice - ((totalPrice / 100) * 10);
+        }
+
         return (
             <MuiThemeProvider>
                 <React.Fragment>
@@ -28,11 +37,11 @@ export class Confirm extends Component {
                     <List>
                         <ListItem 
                             primaryText="Subscription duration"
-                            secondaryText={ duration }
+                            secondaryText={ duration + " months"}
                         />
                         <ListItem 
                             primaryText="Gigabyte amount"
-                            secondaryText={ gigabytes }
+                            secondaryText={ gigabytes + " gigabytes"}
                         />
                         <ListItem 
                             primaryText="Upfront payment?"
@@ -68,7 +77,7 @@ export class Confirm extends Component {
                         />
                         <ListItem 
                             primaryText="Total price"
-                            secondaryText={ price }
+                            secondaryText={ totalPrice }
                         />
                     </List>
                     <form>
@@ -76,7 +85,7 @@ export class Confirm extends Component {
                             I accept the terms and conditions of this agreement
                             <input
                             checked={acceptedTermsAndConditions}
-                            onChange={handleChange('acceptedTermsAndConditions')}
+                            onChange={handleCheck}
                             type="checkbox" />
                         </label>
                     </form>
@@ -86,6 +95,7 @@ export class Confirm extends Component {
                         primary={true}
                         style={styles.button}
                         onClick={this.continue}
+                        disabled={!isEnabled}
                     />
                     <RaisedButton 
                         label="Back"
