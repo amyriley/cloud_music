@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
-import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
 export class FormSubscriptionDetails extends Component {
@@ -17,26 +16,46 @@ export class FormSubscriptionDetails extends Component {
             <MuiThemeProvider>
                 <React.Fragment>
                     <AppBar title="Enter Subscription Details" />
-                    <TextField 
-                        hintText="Enter subscription duration"
-                        floatingLabelText="Subscription duration"
-                        onChange={handleChange('duration')}
-                        defaultValue={values.duration}
-                    />
-                    <br/>
-                    <TextField 
-                        hintText="Enter gigabyte amount"
-                        floatingLabelText="Gigabyte amount"
-                        onChange={handleChange('gigabytes')}
-                        defaultValue={values.gigabytes}
-                    />
-                    <br/>
-                    <TextField 
-                        hintText="Pay upfront?"
-                        floatingLabelText="Upfront payment"
-                        onChange={handleChange('upfrontPayment')}
-                        defaultValue={values.upfrontPayment}
-                    />
+                    <form>
+                        <label>
+                            Subscription duration:
+                            <select value={values.duration} onChange={handleChange('duration')}>
+                                <option value="3 months">3 months</option>
+                                <option value="6 months">6 months</option>
+                                <option value="12 months">12 months</option>
+                            </select>
+                        </label>
+                        <label>
+                            Gigabyte amount:
+                            <select value={values.gigabytes} onChange={handleChange('gigabytes')}>
+                                <option value="3">3</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="10">20</option>
+                                <option value="10">30</option>
+                                <option value="10">50</option>
+                            </select>
+                        </label>
+                        <label>
+                            Pay Upfront?
+                            <label>
+                                Yes
+                                <input
+                                    value="yes"
+                                    checked={values.upfrontPayment === "yes"}
+                                    onChange={handleChange('upfrontPayment')}
+                                    type="radio" />
+                            </label>
+                            <label>
+                                No
+                                <input
+                                    value="no"
+                                    checked={values.upfrontPayment === "no"}
+                                    onChange={handleChange('upfrontPayment')}
+                                    type="radio" />
+                            </label>
+                        </label>
+                    </form>
                     <br/>
                     <RaisedButton 
                         label="Continue"

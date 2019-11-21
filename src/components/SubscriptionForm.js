@@ -8,9 +8,9 @@ import Success from './Success';
 export class SubscriptionForm extends Component {
     state = {
         step: 1,
-        duration: '',
-        gigabytes: '',
-        upfrontPayment: '',
+        duration: 12,
+        gigabytes: 5,
+        upfrontPayment: "no",
         firstName: '',
         lastName: '',
         email: '',
@@ -18,7 +18,8 @@ export class SubscriptionForm extends Component {
         cardNumber: '',
         cardExpiryDate: '',
         cardSecurityCode: '',
-        price: 0
+        price: 0,
+        acceptedTermsAndConditions: false
     }
 
     nextStep = () => {
@@ -44,9 +45,11 @@ export class SubscriptionForm extends Component {
     render() {
         const { step } = this.state;
         const { duration, gigabytes, upfrontPayment, firstName, lastName, 
-            email, address, cardNumber, cardExpiryDate, cardSecurityCode } = this.state;
+            email, address, cardNumber, cardExpiryDate, cardSecurityCode, price, 
+            acceptedTermsAndConditions } = this.state;
         const values = { duration, gigabytes, upfrontPayment, firstName, lastName, 
-            email, address, cardNumber, cardExpiryDate, cardSecurityCode }
+            email, address, cardNumber, cardExpiryDate, cardSecurityCode, price, 
+            acceptedTermsAndConditions }
 
         switch(step) {
             case 1:
@@ -80,6 +83,7 @@ export class SubscriptionForm extends Component {
                     <Confirm 
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
+                        handleChange={this.handleChange}
                         values={values}
                     />
                 )

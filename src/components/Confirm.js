@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import { List, ListItem } from 'material-ui/List';
-import { Checkbox } from '@material-ui/core';
-import { Typography } from '@material-ui/core';
 import RaisedButton from 'material-ui/RaisedButton';
 
 export class Confirm extends Component {
@@ -21,7 +19,8 @@ export class Confirm extends Component {
 
     render() {
         const { values: { duration, gigabytes, upfrontPayment, firstName, lastName, 
-            email, address, cardNumber, cardExpiryDate, cardSecurityCode, price } } = this.props;
+            email, address, cardNumber, cardExpiryDate, cardSecurityCode, price, 
+            acceptedTermsAndConditions }, handleChange } = this.props;
         return (
             <MuiThemeProvider>
                 <React.Fragment>
@@ -72,10 +71,15 @@ export class Confirm extends Component {
                             secondaryText={ price }
                         />
                     </List>
-                    <Typography variant="body2" display="block">
-                        Please confirm that you agree to the terms and conditions by selecting the check box:
-                    </Typography>
-                    <Checkbox></Checkbox> 
+                    <form>
+                        <label>
+                            I accept the terms and conditions of this agreement
+                            <input
+                            checked={acceptedTermsAndConditions}
+                            onChange={handleChange('acceptedTermsAndConditions')}
+                            type="checkbox" />
+                        </label>
+                    </form>
                     <br/>
                     <RaisedButton 
                         label="Confirm & Continue"
