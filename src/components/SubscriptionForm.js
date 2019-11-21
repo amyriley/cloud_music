@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import FormSubscriptionDetails from './FormSubscriptionDetails';
 import FormUserDetails from './FormUserDetails';
 import CreditCardDetails from './FormCreditCardDetails';
+import Confirm from './Confirm';
+import Success from './Success';
 
 export class SubscriptionForm extends Component {
     state = {
@@ -15,7 +17,8 @@ export class SubscriptionForm extends Component {
         address: '',
         cardNumber: '',
         cardExpiryDate: '',
-        cardSecurityCode: ''
+        cardSecurityCode: '',
+        price: 0
     }
 
     nextStep = () => {
@@ -58,6 +61,7 @@ export class SubscriptionForm extends Component {
                 return (
                     <FormUserDetails
                         nextStep={this.nextStep}
+                        previousStep={this.previousStep}
                         handleChange={this.handleChange}
                         values={values}
                     />
@@ -66,17 +70,22 @@ export class SubscriptionForm extends Component {
                 return (
                     <CreditCardDetails
                         nextStep={this.nextStep}
+                        previousStep={this.previousStep}
                         handleChange={this.handleChange}
                         values={values}
                     />
                 )
             case 4:
                 return (
-                    <h1>Confirm</h1>
+                    <Confirm 
+                        nextStep={this.nextStep}
+                        previousStep={this.previousStep}
+                        values={values}
+                    />
                 )
             case 5: 
                 return (
-                    <h1>Success</h1>
+                    <Success />
                 )
         }  
     }

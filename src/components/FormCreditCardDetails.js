@@ -11,6 +11,11 @@ export class CreditCardDetails extends Component {
         this.props.nextStep();
     }
 
+    back = (e) => {
+        e.preventDefault();
+        this.props.previousStep();
+    }
+
     render() {
         const { values, handleChange } = this.props;
         return (
@@ -43,6 +48,12 @@ export class CreditCardDetails extends Component {
                         primary={true}
                         style={styles.button}
                         onClick={this.continue}
+                    />
+                    <RaisedButton 
+                        label="Back"
+                        primary={false}
+                        style={styles.button}
+                        onClick={this.back}
                     />
                 </React.Fragment>
             </MuiThemeProvider>
