@@ -32,8 +32,9 @@ export class FormSubscriptionDetails extends Component {
                 >
                     <AppBar title="Enter Subscription Details" />
                     <form>
-                        <InputLabel>Subscription duration:</InputLabel>
-                        <Select 
+                        <InputLabel style={styles.label}>Subscription duration:</InputLabel>
+                        <Select
+                            style={styles.select}
                             value={values.duration} 
                             onChange={handleChange('duration')}
                         >
@@ -42,8 +43,9 @@ export class FormSubscriptionDetails extends Component {
                             <MenuItem value="12">12 months</MenuItem>
                         </Select>
                         <br/>
-                        <InputLabel>Gigabyte amount:</InputLabel>
+                        <InputLabel style={styles.label}>Gigabyte amount:</InputLabel>
                         <Select 
+                            style={styles.select}
                             value={values.gigabytes} 
                             onChange={handleChange('gigabytes')}
                         >
@@ -56,19 +58,19 @@ export class FormSubscriptionDetails extends Component {
                         </Select>
                         <br/>
                         <FormControl component="fieldset">
-                            <FormLabel>Pay upfront?</FormLabel>
-                            <RadioGroup>
+                            <FormLabel style={styles.label}>Pay upfront?</FormLabel>
+                            <RadioGroup style={styles.select}>
                                 <FormControlLabel 
                                     value="yes" 
                                     control={<Radio />} 
-                                    label="yes" 
+                                    label="Yes" 
                                     checked={values.upfrontPayment === "yes"}
                                     onChange={handleChange('upfrontPayment')}
                                 />
                                 <FormControlLabel 
                                     value="no" 
                                     control={<Radio />} 
-                                    label="no" 
+                                    label="No" 
                                     checked={values.upfrontPayment === "no"}
                                     onChange={handleChange('upfrontPayment')}
                                 />
@@ -104,6 +106,14 @@ const styles = {
     input: {
         margin: 12,
         width: 550
+    },
+    label: {
+        margin: 12,
+        marginTop: 12
+    },
+    select: {
+        margin: 12,
+        marginBottom: 20
     }
 }
 
