@@ -10,7 +10,21 @@ export class Confirm extends Component {
 
     continue = (e) => {
         e.preventDefault();
-        // process form here - send to API endpoint
+           
+        fetch("https://httpbin.org/post", {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Accept': 'application/json;charset=UTF-8',
+            'Content-type': 'application/json;charset=UTF-8'
+        },
+        body: JSON.stringify(this.props.values)
+        })
+        .then(response => {
+        console.log(response.json())
+        })
+        .catch(error => console.log(error))
+
         this.props.nextStep();
     }
 
@@ -32,7 +46,7 @@ export class Confirm extends Component {
             totalPrice = totalPrice - ((totalPrice / 100) * 10);
         }
 
-        console.log(this.props.values);
+        // console.log(this.props.values);
 
         return (
             <MuiThemeProvider >
