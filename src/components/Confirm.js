@@ -3,6 +3,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import { List, ListItem } from 'material-ui/List';
 import RaisedButton from 'material-ui/RaisedButton';
+import Dialog from '@material-ui/core/Dialog';
+import Grid from '@material-ui/core/Grid';
 
 export class Confirm extends Component {
 
@@ -20,21 +22,28 @@ export class Confirm extends Component {
     render() {
         const { values: { duration, gigabytes, upfrontPayment, firstName, lastName, 
             email, address, cardNumber, cardExpiryDate, cardSecurityCode,
-            acceptedTermsAndConditions }, handleCheck } = this.props;
+            acceptedTermsAndConditions }, handleCheck, handlePrice } = this.props;
 
         const isEnabled = acceptedTermsAndConditions;
 
-        let totalPrice = gigabytes * parseInt(duration);  
+        let totalPrice = (gigabytes * 2) * parseInt(duration);  
 
         if (upfrontPayment === "yes") {
             totalPrice = totalPrice - ((totalPrice / 100) * 10);
         }
 
+        console.log(this.props.values);
+
         return (
-            <MuiThemeProvider>
-                <React.Fragment>
+            <MuiThemeProvider >
+              <React.Fragment>
+                <Dialog 
+                    open={true}
+                    fullWidth={true}
+                    maxWidth="sm"
+                >
                     <AppBar title="Confirm Subscription Order" />
-                    <List>
+                    <List style={styles.input}>
                         <ListItem 
                             primaryText="Subscription duration"
                             secondaryText={ duration + " months"}
@@ -77,41 +86,61 @@ export class Confirm extends Component {
                         />
                         <ListItem 
                             primaryText="Total price"
-                            secondaryText={ totalPrice }
+                            secondaryText={ "$ " + totalPrice }
                         />
                     </List>
                     <form>
-                        <label>
+                        <label style={styles.terms}>
                             I accept the terms and conditions of this agreement
                             <input
                             checked={acceptedTermsAndConditions}
                             onChange={handleCheck}
+                            style={styles.checkbox}
                             type="checkbox" />
                         </label>
                     </form>
                     <br/>
-                    <RaisedButton 
-                        label="Confirm & Continue"
-                        primary={true}
-                        style={styles.button}
-                        onClick={this.continue}
-                        disabled={!isEnabled}
-                    />
-                    <RaisedButton 
-                        label="Back"
-                        primary={false}
-                        style={styles.button}
-                        onClick={this.back}
-                    />
-                </React.Fragment>
-            </MuiThemeProvider>
+                    <Grid
+                        container
+                        alignItems="center"
+                        justify="center"
+                    >
+                        <RaisedButton 
+                            label="Confirm & Continue"
+                            primary={true}
+                            style={styles.button}
+                            onClick={this.continue}
+                            disabled={!isEnabled}
+                        />
+                        <RaisedButton 
+                            label="Back"
+                            primary={false}
+                            style={styles.button}
+                            onClick={this.back}
+                        />
+                    </Grid>
+                </Dialog>
+            </React.Fragment>
+        </MuiThemeProvider>
         )
     }
 }
 
 const styles = {
     button: {
-        margin: 15
+        margin: 12,
+        width: 200,
+    },
+    input: {
+        margin: 12,
+        width: 550
+    },
+    terms: {
+        margin: 12,
+        padding: 20,
+    },
+    checkbox: {
+        margin: 12
     }
 }
 

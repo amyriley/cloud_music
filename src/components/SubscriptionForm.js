@@ -48,6 +48,12 @@ export class SubscriptionForm extends Component {
         });
     }
 
+    handlePrice = (totalPrice) => {
+        this.setState({
+            price: totalPrice
+        })
+    }
+
     render() {
         const { step } = this.state;
         const { duration, gigabytes, upfrontPayment, firstName, lastName, 
@@ -91,6 +97,7 @@ export class SubscriptionForm extends Component {
                         previousStep={this.previousStep}
                         handleChange={this.handleChange}
                         handleCheck={this.handleCheck}
+                        handlePrice={this.handlePrice}
                         values={values}
                     />
                 )

@@ -3,6 +3,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import Dialog from '@material-ui/core/Dialog';
+import Grid from '@material-ui/core/Grid';
 
 export class FormUserDetails extends Component {
 
@@ -21,8 +23,13 @@ export class FormUserDetails extends Component {
         const isEnabled = values.firstName.length > 0 && values.lastName.length > 0 
         && values.email.length > 0 && values.address.length > 0;
         return (
-            <MuiThemeProvider>
-                <React.Fragment>
+            <MuiThemeProvider >
+              <React.Fragment>
+                <Dialog 
+                    open={true}
+                    fullWidth={true}
+                    maxWidth="sm"
+                >
                     <AppBar title="Enter User Details" />
                     <form>
                         <TextField 
@@ -30,6 +37,7 @@ export class FormUserDetails extends Component {
                             floatingLabelText="First name"
                             onChange={handleChange('firstName')}
                             defaultValue={values.firstName}
+                            style={styles.input}
                         />
                         <br/>
                         <TextField 
@@ -37,6 +45,7 @@ export class FormUserDetails extends Component {
                             floatingLabelText="Last name"
                             onChange={handleChange('lastName')}
                             defaultValue={values.lastName}
+                            style={styles.input}
                         />
                         <br/>
                         <TextField 
@@ -44,6 +53,7 @@ export class FormUserDetails extends Component {
                             floatingLabelText="Email address"
                             onChange={handleChange('email')}
                             defaultValue={values.email}
+                            style={styles.input}
                         />
                         <br/>
                         <TextField 
@@ -51,31 +61,44 @@ export class FormUserDetails extends Component {
                             floatingLabelText="Street address"
                             onChange={handleChange('address')}
                             defaultValue={values.address}
+                            style={styles.input}
                         />
                     </form>
                     <br/>
-                    <RaisedButton 
-                        label="Continue"
-                        primary={true}
-                        style={styles.button}
-                        onClick={this.continue}
-                        disabled={!isEnabled}
-                    />
-                    <RaisedButton 
-                        label="Back"
-                        primary={false}
-                        style={styles.button}
-                        onClick={this.back}
-                    />
-                </React.Fragment>
-            </MuiThemeProvider>
+                    <Grid
+                        container
+                        alignItems="center"
+                        justify="center"
+                    >
+                        <RaisedButton 
+                            label="Back"
+                            primary={false}
+                            style={styles.button}
+                            onClick={this.back}
+                        />
+                        <RaisedButton 
+                            label="Continue"
+                            primary={true}
+                            style={styles.button}
+                            disabled={!isEnabled}
+                            onClick={this.continue}
+                        />
+                    </Grid>
+                </Dialog>
+            </React.Fragment>
+        </MuiThemeProvider>
         )
     }
 }
 
 const styles = {
     button: {
-        margin: 15
+        margin: 12,
+        width: 200,
+    },
+    input: {
+        margin: 12,
+        width: 550
     }
 }
 

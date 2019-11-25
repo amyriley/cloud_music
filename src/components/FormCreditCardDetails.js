@@ -3,6 +3,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import Dialog from '@material-ui/core/Dialog';
+import Grid from '@material-ui/core/Grid';
 
 export class CreditCardDetails extends Component {
 
@@ -21,14 +23,20 @@ export class CreditCardDetails extends Component {
         const isEnabled = values.cardNumber.length > 0 && values.cardExpiryDate > 0 
         && values.cardSecurityCode.length > 0;
         return (
-            <MuiThemeProvider>
-                <React.Fragment>
+            <MuiThemeProvider >
+              <React.Fragment>
+                <Dialog 
+                    open={true}
+                    fullWidth={true}
+                    maxWidth="sm"
+                >
                     <AppBar title="Enter Credit Card Details" />
                     <TextField 
                         hintText="Enter credit card number"
                         floatingLabelText="Credit card number"
                         onChange={handleChange('cardNumber')}
                         defaultValue={values.cardNumber}
+                        style={styles.input}
                     />
                     <br/>
                     <TextField 
@@ -36,6 +44,7 @@ export class CreditCardDetails extends Component {
                         floatingLabelText="Credit card expiry date"
                         onChange={handleChange('cardExpiryDate')}
                         defaultValue={values.cardExpiryDate}
+                        style={styles.input}
                     />
                     <br/>
                     <TextField 
@@ -43,30 +52,43 @@ export class CreditCardDetails extends Component {
                         floatingLabelText="Credit card security code"
                         onChange={handleChange('cardSecurityCode')}
                         defaultValue={values.cardSecurityCode}
+                        style={styles.input}
                     />
                     <br/>
-                    <RaisedButton 
-                        label="Continue"
-                        primary={true}
-                        style={styles.button}
-                        onClick={this.continue}
-                        disabled={!isEnabled}
-                    />
-                    <RaisedButton 
-                        label="Back"
-                        primary={false}
-                        style={styles.button}
-                        onClick={this.back}
-                    />
-                </React.Fragment>
-            </MuiThemeProvider>
+                    <Grid
+                        container
+                        alignItems="center"
+                        justify="center"
+                    >
+                        <RaisedButton 
+                            label="Back"
+                            primary={false}
+                            style={styles.button}
+                            onClick={this.back}
+                        />
+                        <RaisedButton 
+                            label="Continue"
+                            primary={true}
+                            style={styles.button}
+                            disabled={!isEnabled}
+                            onClick={this.continue}
+                        />
+                    </Grid>
+                </Dialog>
+            </React.Fragment>
+        </MuiThemeProvider>
         )
     }
 }
 
 const styles = {
     button: {
-        margin: 15
+        margin: 12,
+        width: 200,
+    },
+    input: {
+        margin: 12,
+        width: 550
     }
 }
 
