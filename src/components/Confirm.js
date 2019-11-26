@@ -36,7 +36,7 @@ export class Confirm extends Component {
     render() {
         const { values: { duration, gigabytes, upfrontPayment, firstName, lastName, 
             email, address, cardNumber, cardExpiryDate, cardSecurityCode,
-            acceptedTermsAndConditions }, handleCheck, handlePrice } = this.props;
+            acceptedTermsAndConditions }, handleCheck } = this.props;
 
         const isEnabled = acceptedTermsAndConditions;
 
@@ -45,8 +45,6 @@ export class Confirm extends Component {
         if (upfrontPayment === "yes") {
             totalPrice = totalPrice - ((totalPrice / 100) * 10);
         }
-
-        // console.log(this.props.values);
 
         return (
             <MuiThemeProvider >
@@ -105,12 +103,12 @@ export class Confirm extends Component {
                     </List>
                     <form>
                         <label style={styles.terms}>
-                            I accept the terms and conditions of this agreement
                             <input
                             checked={acceptedTermsAndConditions}
                             onChange={handleCheck}
                             style={styles.checkbox}
                             type="checkbox" />
+                            I accept the terms and conditions of this agreement
                         </label>
                     </form>
                     <br/>
@@ -120,17 +118,17 @@ export class Confirm extends Component {
                         justify="center"
                     >
                         <RaisedButton 
+                            label="Back"
+                            primary={false}
+                            style={styles.button}
+                            onClick={this.back}
+                        />
+                        <RaisedButton 
                             label="Confirm & Continue"
                             primary={true}
                             style={styles.button}
                             onClick={this.continue}
                             disabled={!isEnabled}
-                        />
-                        <RaisedButton 
-                            label="Back"
-                            primary={false}
-                            style={styles.button}
-                            onClick={this.back}
                         />
                     </Grid>
                 </Dialog>

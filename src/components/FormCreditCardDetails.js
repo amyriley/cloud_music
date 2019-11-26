@@ -20,8 +20,9 @@ export class CreditCardDetails extends Component {
 
     render() {
         const { values, handleChange } = this.props;
-        const isEnabled = values.cardNumber.length > 0 && values.cardExpiryDate > 0 
-        && values.cardSecurityCode.length > 0;
+        const isEnabled = (values.cardNumber.length > 0 && values.cardNumber.length === 16) && 
+        (values.cardExpiryDate.length > 0 && values.cardExpiryDate.length === 5)
+        && (values.cardSecurityCode.length > 0 && values.cardSecurityCode.length === 3);
         return (
             <MuiThemeProvider >
               <React.Fragment>
@@ -39,8 +40,8 @@ export class CreditCardDetails extends Component {
                         style={styles.input}
                     />
                     <br/>
-                    <TextField 
-                        hintText="Enter credit card expiry date"
+                    <TextField
+                        hintText="MM/YY"
                         floatingLabelText="Credit card expiry date"
                         onChange={handleChange('cardExpiryDate')}
                         defaultValue={values.cardExpiryDate}

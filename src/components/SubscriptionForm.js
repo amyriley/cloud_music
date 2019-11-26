@@ -18,7 +18,6 @@ export class SubscriptionForm extends Component {
         cardNumber: '',
         cardExpiryDate: '',
         cardSecurityCode: '',
-        price: 0,
         acceptedTermsAndConditions: false
     }
 
@@ -48,23 +47,18 @@ export class SubscriptionForm extends Component {
         });
     }
 
-    handlePrice = (totalPrice) => {
-        this.setState({
-            price: totalPrice
-        })
-    }
-
     render() {
         const { step } = this.state;
         const { duration, gigabytes, upfrontPayment, firstName, lastName, 
-            email, address, cardNumber, cardExpiryDate, cardSecurityCode, price,  
+            email, address, cardNumber, cardExpiryDate, cardSecurityCode,  
             acceptedTermsAndConditions } = this.state;
         const values = { duration, gigabytes, upfrontPayment, firstName, lastName, 
-            email, address, cardNumber, cardExpiryDate, cardSecurityCode, price,
+            email, address, cardNumber, cardExpiryDate, cardSecurityCode,
             acceptedTermsAndConditions }
 
         switch(step) {
             case 1:
+            default:
                 return (
                     <FormSubscriptionDetails 
                         nextStep={this.nextStep}
@@ -97,7 +91,6 @@ export class SubscriptionForm extends Component {
                         previousStep={this.previousStep}
                         handleChange={this.handleChange}
                         handleCheck={this.handleCheck}
-                        handlePrice={this.handlePrice}
                         values={values}
                     />
                 )
@@ -105,6 +98,7 @@ export class SubscriptionForm extends Component {
                 return (
                     <Success />
                 )
+
         }  
     }
 }
