@@ -153,7 +153,7 @@ const styles = {
     },
     checkbox: {
         margin: 12
-    }
+    },
 }
 
 export default Confirm;

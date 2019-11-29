@@ -37,6 +37,7 @@ export class FormSubscriptionDetails extends Component {
                             style={styles.select}
                             value={values.duration} 
                             onChange={handleChange('duration')}
+                            required
                         >
                             <MenuItem value="3">3 months</MenuItem>
                             <MenuItem value="6">6 months</MenuItem>
@@ -48,6 +49,7 @@ export class FormSubscriptionDetails extends Component {
                             style={styles.select}
                             value={values.gigabytes} 
                             onChange={handleChange('gigabytes')}
+                            required
                         >
                             <MenuItem value="3">3</MenuItem>
                             <MenuItem value="5">5</MenuItem>
@@ -59,7 +61,7 @@ export class FormSubscriptionDetails extends Component {
                         <br/>
                         <FormControl component="fieldset">
                             <FormLabel style={styles.label}>Pay upfront?</FormLabel>
-                            <RadioGroup style={styles.select}>
+                            <RadioGroup style={styles.select} required>
                                 <FormControlLabel 
                                     value="yes" 
                                     control={<Radio />} 

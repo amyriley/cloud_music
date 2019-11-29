@@ -18,7 +18,7 @@ export class SubscriptionForm extends Component {
         cardNumber: '',
         cardExpiryDate: '',
         cardSecurityCode: '',
-        acceptedTermsAndConditions: false
+        acceptedTermsAndConditions: false,
     }
 
     nextStep = () => {
@@ -37,7 +37,7 @@ export class SubscriptionForm extends Component {
 
     handleChange = input => e => {
         this.setState({
-            [input]: e.target.value
+            [input]: e.target.value, 
         });
     }
 
@@ -55,7 +55,7 @@ export class SubscriptionForm extends Component {
         const values = { duration, gigabytes, upfrontPayment, firstName, lastName, 
             email, address, cardNumber, cardExpiryDate, cardSecurityCode,
             acceptedTermsAndConditions }
-
+        
         switch(step) {
             case 1:
             default:

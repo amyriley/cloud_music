@@ -38,6 +38,7 @@ export class CreditCardDetails extends Component {
                         onChange={handleChange('cardNumber')}
                         defaultValue={values.cardNumber}
                         style={styles.input}
+                        required
                     />
                     <br/>
                     <TextField
@@ -46,6 +47,7 @@ export class CreditCardDetails extends Component {
                         onChange={handleChange('cardExpiryDate')}
                         defaultValue={values.cardExpiryDate}
                         style={styles.input}
+                        required
                     />
                     <br/>
                     <TextField 
@@ -54,6 +56,7 @@ export class CreditCardDetails extends Component {
                         onChange={handleChange('cardSecurityCode')}
                         defaultValue={values.cardSecurityCode}
                         style={styles.input}
+                        required
                     />
                     <br/>
                     <Grid
