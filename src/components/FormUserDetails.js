@@ -29,7 +29,7 @@ export class FormUserDetails extends Component {
 
     validate = (firstName, lastName, email, address) => {
         let errors = {};
-        let regName = /^[a-zA-Z]+ [a-zA-Z]+$/;
+        let regName = /^[a-zA-Z]/;
       
         if (!firstName) {
             errors['firstName'] = "First name is required";
@@ -68,7 +68,6 @@ export class FormUserDetails extends Component {
 
     render() {
         const { values, handleChange } = this.props;
-
         return (
             <MuiThemeProvider >
               <React.Fragment>

@@ -7,10 +7,19 @@ import Dialog from '@material-ui/core/Dialog';
 import Grid from '@material-ui/core/Grid';
 
 export class CreditCardDetails extends Component {
+    state = {
+        errors: {}
+    }
 
     continue = (e) => {
         e.preventDefault();
-        this.props.nextStep();
+        const errors = this.validate(this.props.values.cardNumber, this.props.values.cardExpiryDate, 
+                        this.props.values.cardSecurityCode);
+        this.setState({ errors });
+        console.log(errors)
+        if (Object.entries(errors).length === 0) {
+            this.props.nextStep();
+        }
     }
 
     back = (e) => {
@@ -18,11 +27,51 @@ export class CreditCardDetails extends Component {
         this.props.previousStep();
     }
 
+    validate = (cardNumber, cardExpiryDate, cardSecurityCode) => {
+        let errors = {};
+        let numbers = /^[0-9]+$/;
+      
+        if (!cardNumber) {
+            errors['cardNumber'] = "Card number is required";
+        }
+
+        if (!cardNumber.match(numbers)) {
+            errors['cardNumber'] = "Card number is invalid";
+        }
+
+        if (cardNumber.length < 16) {
+            errors['cardNumber'] = "Card number must be 16 digits";
+        }
+
+        if (!cardExpiryDate) {
+            errors['cardExpiryDate'] = "Card expiry date is required";
+        }
+
+        if (cardExpiryDate.length < 5) {
+            errors['cardExpiryDate'] = "Invalid card expiry date";
+        }
+
+        if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(cardExpiryDate)) {
+            errors['cardExpiryDate'] = "Expiry date format must be MM/YY";
+          }
+
+        if (!cardSecurityCode) {
+            errors['cardSecurityCode'] = "Card security code is required";
+        }
+
+        if (cardSecurityCode.length < 3) {
+            errors['cardSecurityCode'] = "Card security code must be 3 digits";
+        }
+
+        if (!cardSecurityCode.match(numbers)) {
+            errors['cardSecurityCode'] = "Card security code is invalid";
+        }
+
+        return errors;
+      }
+
     render() {
         const { values, handleChange } = this.props;
-        const isEnabled = (values.cardNumber.length > 0 && values.cardNumber.length === 16) && 
-        (values.cardExpiryDate.length > 0 && values.cardExpiryDate.length === 5)
-        && (values.cardSecurityCode.length > 0 && values.cardSecurityCode.length === 3);
         return (
             <MuiThemeProvider >
               <React.Fragment>
@@ -40,6 +89,7 @@ export class CreditCardDetails extends Component {
                         style={styles.input}
                         required
                     />
+                    <div>{this.state.errors['cardNumber'] && <span>{this.state.errors['cardNumber']}</span>}</div>
                     <br/>
                     <TextField
                         hintText="MM/YY"
@@ -49,6 +99,7 @@ export class CreditCardDetails extends Component {
                         style={styles.input}
                         required
                     />
+                    <div>{this.state.errors['cardExpiryDate'] && <span>{this.state.errors['cardExpiryDate']}</span>}</div>
                     <br/>
                     <TextField 
                         hintText="Enter credit card security code"
@@ -58,6 +109,7 @@ export class CreditCardDetails extends Component {
                         style={styles.input}
                         required
                     />
+                    <div>{this.state.errors['cardSecurityCode'] && <span>{this.state.errors['cardSecurityCode']}</span>}</div>
                     <br/>
                     <Grid
                         container
@@ -74,7 +126,6 @@ export class CreditCardDetails extends Component {
                             label="Continue"
                             primary={true}
                             style={styles.button}
-                            disabled={!isEnabled}
                             onClick={this.continue}
                         />
                     </Grid>
