@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
-import { List, ListItem } from 'material-ui/List';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from '@material-ui/core/Dialog';
 import Grid from '@material-ui/core/Grid';
+import BackButton from './buttons/BackButton';
+import DetailsList from './DetailsList';
 
 export class Confirm extends Component {
 
-    continue = (e) => {
+    continueAndPostData = (e) => {
         e.preventDefault();
            
         fetch("https://httpbin.org/post", {
@@ -28,23 +29,26 @@ export class Confirm extends Component {
         this.props.nextStep();
     }
 
-    back = (e) => {
-        e.preventDefault();
-        this.props.previousStep();
-    }
-
     render() {
         const { values: { duration, gigabytes, upfrontPayment, firstName, lastName, 
             email, address, cardNumber, cardExpiryDate, cardSecurityCode,
-            acceptedTermsAndConditions }, handleCheck } = this.props;
-
+            acceptedTermsAndConditions }, handleCheck, calculatePrice } = this.props;
+        
         const isEnabled = acceptedTermsAndConditions;
 
-        let totalPrice = (gigabytes * 2) * parseInt(duration);  
-
-        if (upfrontPayment === "yes") {
-            totalPrice = totalPrice - ((totalPrice / 100) * 10);
-        }
+        const detailsList = [
+                        { primaryText: "Subscription duration", secondaryText: duration + " months" }, 
+                        { primaryText: "Gigabyte amount", secondaryText: gigabytes + " gigabytes" },
+                        { primaryText: "Upfront payment?", secondaryText: upfrontPayment },
+                        { primaryText: "First name", secondaryText: firstName },
+                        { primaryText: "Last name", secondaryText: lastName },
+                        { primaryText: "Email", secondaryText: email },
+                        { primaryText: "Street address", secondaryText: address },
+                        { primaryText: "Credit card number", secondaryText: cardNumber },
+                        { primaryText: "Credit card expiry date", secondaryText: cardExpiryDate },
+                        { primaryText: "Credit card security code", secondaryText: cardSecurityCode },
+                        { primaryText: "Total price", secondaryText: "$ " + calculatePrice }
+                    ];
 
         return (
             <MuiThemeProvider >
@@ -55,52 +59,10 @@ export class Confirm extends Component {
                     maxWidth="sm"
                 >
                     <AppBar title="Confirm Subscription Order" />
-                    <List style={styles.input}>
-                        <ListItem 
-                            primaryText="Subscription duration"
-                            secondaryText={ duration + " months"}
-                        />
-                        <ListItem 
-                            primaryText="Gigabyte amount"
-                            secondaryText={ gigabytes + " gigabytes"}
-                        />
-                        <ListItem 
-                            primaryText="Upfront payment?"
-                            secondaryText={ upfrontPayment }
-                        />
-                        <ListItem 
-                            primaryText="First name"
-                            secondaryText={ firstName }
-                        />
-                        <ListItem 
-                            primaryText="Last name"
-                            secondaryText={ lastName }
-                        />
-                        <ListItem 
-                            primaryText="Email address"
-                            secondaryText={ email }
-                        />
-                        <ListItem 
-                            primaryText="Street address"
-                            secondaryText={ address }
-                        />
-                        <ListItem 
-                            primaryText="Credit card number"
-                            secondaryText={ cardNumber }
-                        />
-                        <ListItem 
-                            primaryText="Credit card expiry date"
-                            secondaryText={ cardExpiryDate }
-                        />
-                        <ListItem 
-                            primaryText="Credit card security code"
-                            secondaryText={ cardSecurityCode }
-                        />
-                        <ListItem 
-                            primaryText="Total price"
-                            secondaryText={ "$ " + totalPrice }
-                        />
-                    </List>
+                    <DetailsList 
+                        style={styles.input}
+                        list={detailsList}
+                    />
                     <form>
                         <label style={styles.terms}>
                             <input
@@ -117,17 +79,14 @@ export class Confirm extends Component {
                         alignItems="center"
                         justify="center"
                     >
-                        <RaisedButton 
-                            label="Back"
-                            primary={false}
-                            style={styles.button}
-                            onClick={this.back}
+                        <BackButton 
+                            previousStep={this.props.previousStep}
                         />
                         <RaisedButton 
                             label="Confirm & Continue"
                             primary={true}
                             style={styles.button}
-                            onClick={this.continue}
+                            onClick={this.continueAndPostData}
                             disabled={!isEnabled}
                         />
                     </Grid>

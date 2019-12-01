@@ -5,6 +5,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from '@material-ui/core/Dialog';
 import Grid from '@material-ui/core/Grid';
+import BackButton from './buttons/BackButton';
 
 export class CreditCardDetails extends Component {
     state = {
@@ -20,11 +21,6 @@ export class CreditCardDetails extends Component {
         if (Object.entries(errors).length === 0) {
             this.props.nextStep();
         }
-    }
-
-    back = (e) => {
-        e.preventDefault();
-        this.props.previousStep();
     }
 
     validate = (cardNumber, cardExpiryDate, cardSecurityCode) => {
@@ -116,11 +112,8 @@ export class CreditCardDetails extends Component {
                         alignItems="center"
                         justify="center"
                     >
-                        <RaisedButton 
-                            label="Back"
-                            primary={false}
-                            style={styles.button}
-                            onClick={this.back}
+                        <BackButton 
+                            previousStep={this.props.previousStep}
                         />
                         <RaisedButton 
                             label="Continue"

@@ -47,6 +47,16 @@ export class SubscriptionForm extends Component {
         });
     }
 
+    calculatePrice = () => {
+        let totalPrice = (this.state.gigabytes * 2) * parseInt(this.state.duration);  
+    
+        if (this.state.upfrontPayment === "yes") {
+            totalPrice = totalPrice - ((totalPrice / 100) * 10);
+        }
+
+        return totalPrice;
+    }
+
     render() {
         const { step } = this.state;
         const { duration, gigabytes, upfrontPayment, firstName, lastName, 
@@ -55,6 +65,8 @@ export class SubscriptionForm extends Component {
         const values = { duration, gigabytes, upfrontPayment, firstName, lastName, 
             email, address, cardNumber, cardExpiryDate, cardSecurityCode,
             acceptedTermsAndConditions }
+
+        const calculatePrice = this.calculatePrice();
         
         switch(step) {
             case 1:
@@ -92,6 +104,7 @@ export class SubscriptionForm extends Component {
                         handleChange={this.handleChange}
                         handleCheck={this.handleCheck}
                         values={values}
+                        calculatePrice={calculatePrice}
                     />
                 )
             case 5: 
