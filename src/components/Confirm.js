@@ -5,7 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from '@material-ui/core/Dialog';
 import Grid from '@material-ui/core/Grid';
 import BackButton from './buttons/BackButton';
-import DetailsList from './DetailsList';
+import DetailsList from './lists/DetailsList';
 
 export class Confirm extends Component {
 

@@ -1,23 +1,22 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
-import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from '@material-ui/core/Dialog';
 import Grid from '@material-ui/core/Grid';
-import BackButton from './buttons/BackButton';
+import BackButton from '../buttons/BackButton';
+import FormTextFieldInputs from '../inputs/FormTextFieldInputs';
 
 export class CreditCardDetails extends Component {
     state = {
         errors: {}
     }
 
-    continue = (e) => {
+    validateAndContinue = (e) => {
         e.preventDefault();
         const errors = this.validate(this.props.values.cardNumber, this.props.values.cardExpiryDate, 
                         this.props.values.cardSecurityCode);
         this.setState({ errors });
-        console.log(errors)
         if (Object.entries(errors).length === 0) {
             this.props.nextStep();
         }
@@ -68,6 +67,11 @@ export class CreditCardDetails extends Component {
 
     render() {
         const { values, handleChange } = this.props;
+        const creditCardDetails = [
+            { hintText: "Enter credit card number", floatingLabelText: "Credit card number", defaultValue: values.cardNumber, name: 'cardNumber', error: this.state.errors['cardNumber'] },
+            { hintText: "Credit card expiry date", floatingLabelText: "Credit card expiry date", defaultValue: values.cardExpiryDate, name: 'cardExpiryDate', error: this.state.errors['cardExpiryDate'] },
+            { hintText: "Enter credit card security code", floatingLabelText: "Credit card security code", defaultValue: values.cardSecurityCode, name: 'cardSecurityCode', error: this.state.errors['cardSecurityCode'] }
+        ]
         return (
             <MuiThemeProvider >
               <React.Fragment>
@@ -77,35 +81,10 @@ export class CreditCardDetails extends Component {
                     maxWidth="sm"
                 >
                     <AppBar title="Enter Credit Card Details" />
-                    <TextField 
-                        hintText="Enter credit card number"
-                        floatingLabelText="Credit card number"
-                        onChange={handleChange('cardNumber')}
-                        defaultValue={values.cardNumber}
-                        style={styles.input}
-                        required
+                    <FormTextFieldInputs 
+                        list={creditCardDetails}
+                        handleChange={handleChange}
                     />
-                    <div>{this.state.errors['cardNumber'] && <span>{this.state.errors['cardNumber']}</span>}</div>
-                    <br/>
-                    <TextField
-                        hintText="MM/YY"
-                        floatingLabelText="Credit card expiry date"
-                        onChange={handleChange('cardExpiryDate')}
-                        defaultValue={values.cardExpiryDate}
-                        style={styles.input}
-                        required
-                    />
-                    <div>{this.state.errors['cardExpiryDate'] && <span>{this.state.errors['cardExpiryDate']}</span>}</div>
-                    <br/>
-                    <TextField 
-                        hintText="Enter credit card security code"
-                        floatingLabelText="Credit card security code"
-                        onChange={handleChange('cardSecurityCode')}
-                        defaultValue={values.cardSecurityCode}
-                        style={styles.input}
-                        required
-                    />
-                    <div>{this.state.errors['cardSecurityCode'] && <span>{this.state.errors['cardSecurityCode']}</span>}</div>
                     <br/>
                     <Grid
                         container
@@ -119,7 +98,7 @@ export class CreditCardDetails extends Component {
                             label="Continue"
                             primary={true}
                             style={styles.button}
-                            onClick={this.continue}
+                            onClick={this.validateAndContinue}
                         />
                     </Grid>
                 </Dialog>
@@ -134,10 +113,6 @@ const styles = {
         margin: 12,
         width: 200,
     },
-    input: {
-        margin: 12,
-        width: 550
-    }
 }
 
 export default CreditCardDetails;

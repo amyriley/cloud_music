@@ -1,23 +1,22 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
-import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from '@material-ui/core/Dialog';
 import Grid from '@material-ui/core/Grid';
-import BackButton from './buttons/BackButton';
+import BackButton from '../buttons/BackButton';
+import FormTextFieldInputs from '../inputs/FormTextFieldInputs';
 
 export class FormUserDetails extends Component {
     state = {
         errors: {}
     }
 
-    continue = (e) => {
+    validateAndContinue = (e) => {
         e.preventDefault();
         const errors = this.validate(this.props.values.firstName, this.props.values.lastName, 
                         this.props.values.email, this.props.values.address);
         this.setState({ errors });
-        console.log(errors)
         if (Object.entries(errors).length === 0) {
             this.props.nextStep();
         }
@@ -64,6 +63,12 @@ export class FormUserDetails extends Component {
 
     render() {
         const { values, handleChange } = this.props;
+        const userDetails = [
+            { hintText: "Enter first name", floatingLabelText: "First name", defaultValue: values.firstName, name: 'firstName', error: this.state.errors['firstName'] },
+            { hintText: "Enter last name", floatingLabelText: "Last name", defaultValue: values.lastName, name: 'lastName', error: this.state.errors['lastName'] },
+            { hintText: "Enter email address", floatingLabelText: "Email address", defaultValue: values.email, name: 'email', error: this.state.errors['email'] },
+            { hintText: "Enter street address", floatingLabelText: "Street address", defaultValue: values.address, name: 'address', error: this.state.errors['address'] },
+        ]
         return (
             <MuiThemeProvider >
               <React.Fragment>
@@ -73,47 +78,10 @@ export class FormUserDetails extends Component {
                     maxWidth="sm"
                 >
                     <AppBar title="Enter User Details" />
-                    <form>
-                        <TextField 
-                            hintText="Enter first name"
-                            floatingLabelText="First name"
-                            onChange={handleChange('firstName')}
-                            defaultValue={values.firstName}
-                            style={styles.input}
-                            required
-                        />
-                        <div>{this.state.errors['firstName'] && <span>{this.state.errors['firstName']}</span>}</div>
-                        <br/>
-                        <TextField 
-                            hintText="Enter last name"
-                            floatingLabelText="Last name"
-                            onChange={handleChange('lastName')}
-                            defaultValue={values.lastName}
-                            style={styles.input}
-                            required
-                        />
-                        <div>{this.state.errors['lastName'] && <span>{this.state.errors['lastName']}</span>}</div>
-                        <br/>
-                        <TextField 
-                            hintText="Enter email adddress"
-                            floatingLabelText="Email address"
-                            onChange={handleChange('email')}
-                            defaultValue={values.email}
-                            style={styles.input}
-                            required
-                        />
-                        <div>{this.state.errors['email'] && <span>{this.state.errors['email']}</span>}</div>
-                        <br/>
-                        <TextField 
-                            hintText="Enter street adddress"
-                            floatingLabelText="Street address"
-                            onChange={handleChange('address')}
-                            defaultValue={values.address}
-                            style={styles.input}
-                            required
-                        />
-                        <div>{this.state.errors['address'] && <span>{this.state.errors['address']}</span>}</div>
-                    </form>
+                    <FormTextFieldInputs 
+                        list={userDetails}
+                        handleChange={handleChange}
+                    />
                     <br/>
                     <Grid
                         container
@@ -127,7 +95,7 @@ export class FormUserDetails extends Component {
                             label="Continue"
                             primary={true}
                             style={styles.button}
-                            onClick={this.continue}
+                            onClick={this.validateAndContinue}
                         />
                     </Grid>
                 </Dialog>
@@ -142,13 +110,6 @@ const styles = {
         margin: 12,
         width: 200,
     },
-    input: {
-        margin: 12,
-        width: 550
-    },
-    asterix: {
-        color: "red",
-    }
 }
 
 export default FormUserDetails;

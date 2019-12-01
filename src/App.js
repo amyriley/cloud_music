@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SubscriptionForm from './components/SubscriptionForm';
+import SubscriptionForm from './components/forms/SubscriptionForm';
 
 class App extends Component {
   render() {

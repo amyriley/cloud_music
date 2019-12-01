@@ -9,27 +9,27 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import ContinueButton from './buttons/ContinueButton';
-import Dropdown from './inputs/Dropdown';
+import ContinueButton from '../buttons/ContinueButton';
+import Dropdown from '../inputs/Dropdown';
 
 export class FormSubscriptionDetails extends Component {
     render() {
         const { values, handleChange } = this.props;
 
         const menuItemsDuration = [ 
-                                    { value: "3", displayText: "3 months" },
-                                    { value: "6", displayText: "6 months" },
-                                    { value: "12", displayText: "12 months" }
-                                 ];
+            { value: "3", displayText: "3 months" },
+            { value: "6", displayText: "6 months" },
+            { value: "12", displayText: "12 months" }
+        ];
 
         const menuItemsGigabytes =  [
-                                        { value: "3", displayText: 3},
-                                        { value: "5", displayText: 5},
-                                        { value: "10", displayText: 10},
-                                        { value: "20", displayText: 20},
-                                        { value: "30", displayText: 30},
-                                        { value: "50", displayText: 50}
-                                    ];
+            { value: "3", displayText: 3},
+            { value: "5", displayText: 5},
+            { value: "10", displayText: 10},
+            { value: "20", displayText: 20},
+            { value: "30", displayText: 30},
+            { value: "50", displayText: 50}
+        ];
         return (
             <MuiThemeProvider >
               <React.Fragment>
@@ -53,19 +53,6 @@ export class FormSubscriptionDetails extends Component {
                             value={values.gigabytes}
                             onChange={handleChange('gigabytes')}
                         />
-                        {/* <Select 
-                            style={styles.select}
-                            value={values.gigabytes} 
-                            onChange={handleChange('gigabytes')}
-                            required
-                        >
-                            <MenuItem value="3">3</MenuItem>
-                            <MenuItem value="5">5</MenuItem>
-                            <MenuItem value="10">10</MenuItem>
-                            <MenuItem value="20">20</MenuItem>
-                            <MenuItem value="30">30</MenuItem>
-                            <MenuItem value="50">50</MenuItem>
-                        </Select> */}
                         <br/>
                         <FormControl component="fieldset">
                             <FormLabel style={styles.label}>Pay upfront?</FormLabel>
@@ -106,10 +93,6 @@ export class FormSubscriptionDetails extends Component {
 }
 
 const styles = {
-    button: {
-        margin: 12,
-        width: 200,
-    },
     input: {
         margin: 12,
         width: 550

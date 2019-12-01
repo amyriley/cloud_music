@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import FormSubscriptionDetails from './FormSubscriptionDetails';
 import FormUserDetails from './FormUserDetails';
 import CreditCardDetails from './FormCreditCardDetails';
-import Confirm from './Confirm';
-import Success from './Success';
+import Confirm from '../Confirm';
+import Success from '../Success';
 
 export class SubscriptionForm extends Component {
     state = {
@@ -66,7 +66,7 @@ export class SubscriptionForm extends Component {
             email, address, cardNumber, cardExpiryDate, cardSecurityCode,
             acceptedTermsAndConditions }
 
-        const calculatePrice = this.calculatePrice();
+        const calculatePrice = this.calculatePrice().toFixed(2);
         
         switch(step) {
             case 1:
